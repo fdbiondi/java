@@ -15,8 +15,7 @@ public class principal {
 		x = sc.nextInt();
 		
 		if (x==2){
-			ReadList r = new ReadList();
-			r.readList();
+			ReadList.readList();
 		}else{
 			Reverse r = new Reverse();
 			r.viewListReverse();	

@@ -1,19 +1,21 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class CalcSueldo {
 
 	public static void main(String[] args) {
-
 		
-		int cantEmp = 2, resp;
-		Empleado[] empleado = new Empleado[cantEmp];
+		String chargeAnother = "S";
+		int resp;
+		ArrayList<Empleado> empleados = new ArrayList<Empleado>();
 		Scanner sc = new Scanner(System.in);
 		
 		String dni, nombre, apellido, mail; 
 		
 		double sueldoBase, hsExtra, hsMes, totalVtas, porcenComision;
 		
-		for (int i=0;i<cantEmp;i++){
+		//for (int i=0;i<cantEmp;i++){
+		do {
 			Empleado e;
 			
 			System.out.println("Administrativo[1] o Vendedor[2]?");
@@ -35,7 +37,7 @@ public class CalcSueldo {
 				System.out.println("Ingrese Horas mes");
 				hsMes = Double.parseDouble(sc.nextLine());
 				e = new Administrativo( dni,  nombre,  apellido,  mail, sueldoBase, hsExtra, hsMes); 
-				empleado[i] = e;
+				empleados.add(e);
 			}
 			else{
 				System.out.println("Ingrese nombre");
@@ -53,20 +55,23 @@ public class CalcSueldo {
 				System.out.println("Ingrese total de ventas");
 				totalVtas = Double.parseDouble(sc.nextLine());
 				e = new Vendedor( dni,  nombre,  apellido,  mail, sueldoBase, porcenComision, totalVtas); 
-				empleado[i] = e;
+				empleados.add(e);
 			}
-		}
+			
+			System.out.println("Quiere agregar otro empleado? S/N");
+			chargeAnother = sc.nextLine();
+			
+		}while(!chargeAnother.equalsIgnoreCase("N"));
 		sc.close();
 		
 		
 		System.out.println("Listado Empleados");
-		for(int i=0;i<cantEmp;i++){
-			empleado[i].listarEmpleados();
-			if (empleado[i] instanceof Administrativo)
-				((Administrativo)empleado[i]).getSueldo();
+		for(int i=0;i<empleados.size();i++){
+			empleados.get(i).listarEmpleados();
+			if (empleados.get(i) instanceof Administrativo)
+				((Administrativo)empleados.get(i)).getSueldo();
 			else
-				((Vendedor)empleado[i]).getSueldo();
+				((Vendedor)empleados.get(i)).getSueldo();
 		}
-		
 	}
 }
